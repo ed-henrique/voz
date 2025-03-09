@@ -58,9 +58,9 @@ func main() {
 	mux := http.DefaultServeMux
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {})
-	mux.HandleFunc("GET /login", func(w http.ResponseWriter, r *http.Request) {})
-	mux.HandleFunc("POST /login", func(w http.ResponseWriter, r *http.Request) {})
-	mux.HandleFunc("POST /logout", func(w http.ResponseWriter, r *http.Request) {})
+	mux.HandleFunc("POST /auth/google/login", func(w http.ResponseWriter, r *http.Request) {})
+	mux.HandleFunc("POST /auth/google/callback", func(w http.ResponseWriter, r *http.Request) {})
+	mux.HandleFunc("POST /auth/logout", func(w http.ResponseWriter, r *http.Request) {})
 	mux.HandleFunc("GET /board", func(w http.ResponseWriter, r *http.Request) {
 		tmpl := getTemplates("board.html", "board_card.html")
 
