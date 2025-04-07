@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/fs"
 	"net/http"
-	"time"
 
 	"github.com/ed-henrique/voz/internal/db"
 	"github.com/ed-henrique/voz/internal/errkit"
@@ -78,7 +77,6 @@ func (s *Server) Routes() {
 			Name:        name,
 			Description: description,
 			UserID:      1,
-			CreatedAt:   time.Now(),
 		})
 		if err != nil {
 			errkit.FinalErr(err.Error())
@@ -87,6 +85,7 @@ func (s *Server) Routes() {
 
 		http.Redirect(w, r, fmt.Sprintf("/board/cards/%d", id), http.StatusSeeOther)
 	})
+
 	s.mux.HandleFunc("GET /board/cards/:card_id", func(w http.ResponseWriter, r *http.Request) {})
 	s.mux.HandleFunc("PATCH /board/cards/:card_id", func(w http.ResponseWriter, r *http.Request) {})
 	s.mux.HandleFunc("DELETE /board/cards/:card_id", func(w http.ResponseWriter, r *http.Request) {})

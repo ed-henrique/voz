@@ -2,7 +2,7 @@
 create table user_types (
     id integer primary key,
     name text not null,
-    created_at datetime not null,
+    created_at datetime not null default(strftime('%Y-%m-%dT%H:%M:%f', 'now')),
     updated_at datetime,
     removed_at datetime
 );
@@ -15,7 +15,7 @@ create table users (
     username text unique not null,
     password text not null,
     user_type_id integer not null,
-    created_at datetime not null,
+    created_at datetime not null default(strftime('%Y-%m-%dT%H:%M:%f', 'now')),
     updated_at datetime,
     removed_at datetime,
     foreign key (user_type_id) references user_types(id)
@@ -29,7 +29,7 @@ create table cards (
     name text not null,
     description text not null,
     user_id integer not null, -- Author
-    created_at datetime not null,
+    created_at datetime not null default(strftime('%Y-%m-%dT%H:%M:%f', 'now')),
     updated_at datetime,
     removed_at datetime,
     foreign key (user_id) references users(id)
@@ -42,7 +42,7 @@ create table upvotes (
     id integer primary key,
     card_id integer not null,
     user_id integer not null,
-    created_at datetime not null,
+    created_at datetime not null default(strftime('%Y-%m-%dT%H:%M:%f', 'now')),
     updated_at datetime,
     removed_at datetime,
     foreign key (card_id) references cards(id),
@@ -58,7 +58,7 @@ create table downvotes (
     id integer primary key,
     card_id integer not null,
     user_id integer not null,
-    created_at datetime not null,
+    created_at datetime not null default(strftime('%Y-%m-%dT%H:%M:%f', 'now')),
     updated_at datetime,
     removed_at datetime,
     foreign key (card_id) references cards(id),
@@ -76,7 +76,7 @@ create table comments (
     card_id integer not null,
     user_id integer not null,
     comment_id integer,
-    created_at datetime not null,
+    created_at datetime not null default(strftime('%Y-%m-%dT%H:%M:%f', 'now')),
     updated_at datetime,
     removed_at datetime,
     foreign key (card_id) references cards(id),
