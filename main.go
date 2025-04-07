@@ -55,7 +55,7 @@ func getTemplates(names ...string) *template.Template {
 }
 
 func main() {
-	mux := http.DefaultServeMux
+	mux := http.NewServeMux()
 
 	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {})
 	mux.HandleFunc("POST /auth/google/login", func(w http.ResponseWriter, r *http.Request) {})
@@ -90,6 +90,7 @@ Etiam gravida sed massa ut ullamcorper. Cras facilisis urna id euismod efficitur
 					Title:       "a",
 					Description: "b",
 					Reaction:    DOWNVOTTED,
+					Upvotes:     1423480890,
 				},
 				{
 					Title:       "a",
@@ -111,7 +112,7 @@ Etiam gravida sed massa ut ullamcorper. Cras facilisis urna id euismod efficitur
 	mux.HandleFunc("PATCH /board/cards/:card_id/comments/:comment_id", func(w http.ResponseWriter, r *http.Request) {})
 	mux.HandleFunc("DELETE /board/cards/:card_id/:comment_id", func(w http.ResponseWriter, r *http.Request) {})
 
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":8080", mux); err != nil {
 		FinalErr(err.Error())
 	}
 }
