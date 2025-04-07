@@ -11,15 +11,14 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fuzzy+Bubbles:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-  <div class="flex flex-col font-[Sour_Gummy] min-h-screen p-5">
+  <div class="bg-slate-50 flex flex-col font-[Fuzzy_Bubbles] min-h-screen p-5">
     <nav class="mb-7">
       <a href="/">
-        <h1 class="float-left text-xl text-blue-500">Voz</h1>
+        <h1 class="float-left font-bold text-xl text-blue-500">Voz</h1>
       </a>
       <ul class="flex gap-3 justify-center *:font-bold">
         <li>
@@ -32,7 +31,7 @@
     </nav>
 
     <div class="flex flex-col gap-5 grow items-center">
-      <a href="/board/cards/new" class="bg-blue-500 flex items-center justify-between rounded-xl text-white p-5 shadow-md 
+      <a href="/board/cards/new" class="bg-blue-500 flex items-center justify-between rounded-md text-white p-5 shadow-md 
         w-full lg:w-3/4">
         <span class="font-bold text-xl">Cadastrar Nova Sugestão</span>
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-5">
@@ -43,15 +42,15 @@
       </a>
       <div class="gap-5 grid lg:grid-cols-2 place-content-stretch w-full *:flex *:flex-col *:p-5 lg:w-3/4">
         {{ range .Cards }}
-        {{ template "board_card" . }}
+        {{ template "card" . }}
         {{ end }}
       </div>
     </div>
 
     <footer class="mt-7 text-center text-gray-500 text-xs">
       <span class="inline-block text-right w-full lg:w-3/4">
-        Criado por <a class="text-blue-500" href="https://seplan.rr.gov.br/cgpre/" target="_blank"
-          referrerpolicy="no-referrer" rel="noreferrer">CGPRE/SEPLAN</a>
+        Criado por <a class="text-blue-500" href="https://ed-henrique.com/" target="_blank" referrerpolicy="no-referrer"
+          rel="noreferrer">Eduardo Henrique</a>
       </span>
     </footer>
   </div>

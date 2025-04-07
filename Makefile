@@ -1,4 +1,4 @@
 watch:
-	@wgo -file=.go -file=.html go run main.go
+	@wgo -file=.go -file=.html go run cmd/api/main.go
 
 .PHONY: watch
