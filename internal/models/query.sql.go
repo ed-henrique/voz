@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 	"database/sql"
+	"time"
 )
 
 const getCard = `-- name: GetCard :one
@@ -368,4 +369,37 @@ func (q *Queries) GetUser(ctx context.Context, id int64) (User, error) {
 		&i.RemovedAt,
 	)
 	return i, err
+}
+
+const insertCard = `-- name: InsertCard :one
+insert into cards (
+    name,
+    description,
+    user_id,
+    created_at
+) values (
+    ?1,
+    ?2,
+    ?3,
+    ?4
+) returning id
+`
+
+type InsertCardParams struct {
+	Name        string
+	Description string
+	UserID      int64
+	CreatedAt   time.Time
+}
+
+func (q *Queries) InsertCard(ctx context.Context, arg InsertCardParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, insertCard,
+		arg.Name,
+		arg.Description,
+		arg.UserID,
+		arg.CreatedAt,
+	)
+	var id int64
+	err := row.Scan(&id)
+	return id, err
 }

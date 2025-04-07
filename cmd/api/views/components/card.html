@@ -4,32 +4,32 @@
   <p class="line-clamp-5 text-ellipsis text-justify hyphens-auto overflow-hidden">{{
     .Description }}</p>
   <div class="flex grow items-end justify-between mt-7 [&>*>button]:cursor-pointer *:gap-3">
-    <div class="flex *:font-semibold *:inline-flex *:items-center">
-      <button class="{{ if eq .Reaction 1 }}text-blue-500{{ end }}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-          <path fill-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm.53 5.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.72-1.72v5.69a.75.75 0 0 0 1.5 0v-5.69l1.72 1.72a.75.75 0 1 0 1.06-1.06l-3-3Z"
-            clip-rule="evenodd" />
-        </svg>
-        <span class="ml-1 text-sm">{{ shorten .Upvotes }}</span>
-      </button>
-      <button class="{{ if eq .Reaction 2 }}text-blue-500{{ end }}">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6">
-          <path fill-rule="evenodd"
-            d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-.53 14.03a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V8.25a.75.75 0 0 0-1.5 0v5.69l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3Z"
-            clip-rule="evenodd" />
-        </svg>
-        <span class="ml-1 text-sm">{{ shorten .Downvotes }}</span>
-      </button>
-      <div class="text-gray-500">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-          class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-        </svg>
-        <span class="ml-1 text-sm">{{ if .Comments }}{{ shorten (.Comments | len) }}{{ else }}0{{ end }}</span>
-      </div>
-    </div>
+    <!-- <div class="flex *:font-semibold *:inline-flex *:items-center"> -->
+    <!-- <button class="{{ if eq .Reaction 1 }}text-blue-500{{ end }}"> -->
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6"> -->
+    <!-- <path fill-rule="evenodd" -->
+    <!-- d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm.53 5.47a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.72-1.72v5.69a.75.75 0 0 0 1.5 0v-5.69l1.72 1.72a.75.75 0 1 0 1.06-1.06l-3-3Z" -->
+    <!-- clip-rule="evenodd" /> -->
+    <!-- </svg> -->
+    <!-- <span class="ml-1 text-sm">{{ shorten .Upvotes }}</span> -->
+    <!-- </button> -->
+    <!-- <button class="{{ if eq .Reaction 2 }}text-blue-500{{ end }}"> -->
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-6"> -->
+    <!-- <path fill-rule="evenodd" -->
+    <!-- d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-.53 14.03a.75.75 0 0 0 1.06 0l3-3a.75.75 0 1 0-1.06-1.06l-1.72 1.72V8.25a.75.75 0 0 0-1.5 0v5.69l-1.72-1.72a.75.75 0 0 0-1.06 1.06l3 3Z" -->
+    <!-- clip-rule="evenodd" /> -->
+    <!-- </svg> -->
+    <!-- <span class="ml-1 text-sm">{{ shorten .Downvotes }}</span> -->
+    <!-- </button> -->
+    <!-- <div class="text-gray-500"> -->
+    <!-- <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" -->
+    <!-- class="size-6"> -->
+    <!-- <path stroke-linecap="round" stroke-linejoin="round" -->
+    <!-- d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" /> -->
+    <!-- </svg> -->
+    <!-- <span class="ml-1 text-sm">{{ if .Comments }}{{ shorten (.Comments | len) }}{{ else }}0{{ end }}</span> -->
+    <!-- </div> -->
+    <!-- </div> -->
     <div class="flex text-white *:font-semibold 
             *:inline-flex *:p-2 *:rounded-md">
       <button class="bg-blue-500 flex gap-1 items-center">

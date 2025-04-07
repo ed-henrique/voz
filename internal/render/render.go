@@ -3,6 +3,7 @@ package render
 import (
 	"html/template"
 	"io/fs"
+	"path"
 
 	"github.com/ed-henrique/voz/internal/errkit"
 	"github.com/ed-henrique/voz/internal/shortener"
@@ -13,7 +14,7 @@ var tmplFuncs = template.FuncMap{
 }
 
 func Render(views fs.FS, files ...string) *template.Template {
-	mainFilename := files[0]
+	mainFilename := path.Base(files[0])
 	templatePaths := make([]string, len(files))
 	for i, filename := range files {
 		templatePaths[i] = "views/" + filename

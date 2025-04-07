@@ -4,6 +4,7 @@ import (
 	"database/sql"
 
 	"github.com/ed-henrique/voz/internal/errkit"
+	_ "modernc.org/sqlite"
 )
 
 var params = "?_pragma=foreign_keys(1)"

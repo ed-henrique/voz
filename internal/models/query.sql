@@ -7,6 +7,19 @@ select * from cards;
 -- name: GetCardsByUser :many
 select * from cards where user_id = @user_id;
 
+-- name: InsertCard :one
+insert into cards (
+    name,
+    description,
+    user_id,
+    created_at
+) values (
+    @name,
+    @description,
+    @user_id,
+    @created_at
+) returning id;
+
 -- name: GetUpvotesByCard :many
 select count(*) from upvotes where card_id = @card_id;
 
