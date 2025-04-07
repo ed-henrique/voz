@@ -1,7 +1,7 @@
 {{ define "title" }} - New Suggestion{{ end }}
 {{ define "content" }}
 <div class="bg-blue-500 p-5 rounded-md shadow-md text-white w-full lg:w-3/4">
-  <h2 class="text-lg italic mb-3">New Suggestion</h2>
+  <h2 class="border-b-2 border-white float-right text-lg text-right italic mb-3 pb-1 w-full">New Suggestion</h2>
   <form action="/board/cards/new" method="POST">
     <div class="mb-3">
       <label for="name" class="font-bold mb-1">Name</label>
@@ -10,8 +10,8 @@
     </div>
     <div class="mb-3">
       <label for="description" class="font-bold mb-1">Description</label>
-      <textarea required type="text" id="description" name="description" rows="5"
-        class="bg-blue-400 rounded-md focus:outline-2 focus:outline-white-500 px-2 w-full"></textarea>
+      <textarea required type="text" id="description" name="description" rows="15"
+        class="bg-blue-400 rounded-md focus:outline-2 focus:outline-white-500 px-2 resize-none w-full"></textarea>
     </div>
     <button
       class="bg-blue-400 cursor-pointer float-right font-semibold focus:outline-2 focus:outline-white-500 p-2 px-4 rounded-md"

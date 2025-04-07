@@ -8,8 +8,29 @@ package models
 import (
 	"context"
 	"database/sql"
-	"time"
 )
+
+const downvoteCard = `-- name: DownvoteCard :one
+insert into downvotes (
+    card_id,
+    user_id
+) values (
+    ?1,
+    ?2
+) returning id
+`
+
+type DownvoteCardParams struct {
+	CardID int64
+	UserID int64
+}
+
+func (q *Queries) DownvoteCard(ctx context.Context, arg DownvoteCardParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, downvoteCard, arg.CardID, arg.UserID)
+	var id int64
+	err := row.Scan(&id)
+	return id, err
+}
 
 const getCard = `-- name: GetCard :one
 select id, name, description, user_id, created_at, updated_at, removed_at from cards where id = ?1 limit 1
@@ -375,13 +396,11 @@ const insertCard = `-- name: InsertCard :one
 insert into cards (
     name,
     description,
-    user_id,
-    created_at
+    user_id
 ) values (
     ?1,
     ?2,
-    ?3,
-    ?4
+    ?3
 ) returning id
 `
 
@@ -389,16 +408,68 @@ type InsertCardParams struct {
 	Name        string
 	Description string
 	UserID      int64
-	CreatedAt   time.Time
 }
 
 func (q *Queries) InsertCard(ctx context.Context, arg InsertCardParams) (int64, error) {
-	row := q.db.QueryRowContext(ctx, insertCard,
-		arg.Name,
-		arg.Description,
+	row := q.db.QueryRowContext(ctx, insertCard, arg.Name, arg.Description, arg.UserID)
+	var id int64
+	err := row.Scan(&id)
+	return id, err
+}
+
+const insertComment = `-- name: InsertComment :one
+insert into comments (
+    content,
+    card_id,
+    user_id,
+    comment_id
+) values (
+    ?1,
+    ?2,
+    ?3,
+    CASE
+        WHEN ?4 = 0 THEN NULL
+        ELSE ?4
+    END
+) returning id
+`
+
+type InsertCommentParams struct {
+	Content   string
+	CardID    int64
+	UserID    int64
+	CommentID interface{}
+}
+
+func (q *Queries) InsertComment(ctx context.Context, arg InsertCommentParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, insertComment,
+		arg.Content,
+		arg.CardID,
 		arg.UserID,
-		arg.CreatedAt,
+		arg.CommentID,
 	)
+	var id int64
+	err := row.Scan(&id)
+	return id, err
+}
+
+const upvoteCard = `-- name: UpvoteCard :one
+insert into upvotes (
+    card_id,
+    user_id
+) values (
+    ?1,
+    ?2
+) returning id
+`
+
+type UpvoteCardParams struct {
+	CardID int64
+	UserID int64
+}
+
+func (q *Queries) UpvoteCard(ctx context.Context, arg UpvoteCardParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, upvoteCard, arg.CardID, arg.UserID)
 	var id int64
 	err := row.Scan(&id)
 	return id, err

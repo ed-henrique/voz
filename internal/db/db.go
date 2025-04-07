@@ -12,11 +12,11 @@ var params = "?_pragma=foreign_keys(1)"
 func New(dsnURI string) *sql.DB {
 	conn, err := sql.Open("sqlite", dsnURI+params)
 	if err != nil {
-		errkit.FinalErr(err.Error())
+		errkit.FinalErr(err)
 	}
 
 	if err := conn.Ping(); err != nil {
-		errkit.FinalErr(err.Error())
+		errkit.FinalErr(err)
 	}
 
 	return conn

@@ -13,6 +13,7 @@ const dbDsnURI = "db.sqlite3"
 
 func main() {
 	s := server.New(views, dbDsnURI)
+	s.LoadTemplates()
 	s.Routes()
 	s.Run()
 }
