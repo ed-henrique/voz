@@ -10,6 +10,7 @@ import (
 	"github.com/ed-henrique/voz/internal/errkit"
 	"github.com/ed-henrique/voz/internal/models"
 	"github.com/ed-henrique/voz/internal/render"
+	"github.com/ed-henrique/voz/internal/views"
 )
 
 type Server struct {
@@ -18,29 +19,30 @@ type Server struct {
 	views fs.FS
 
 	q         *models.Queries
-	templates map[string]*template.Template
+	templates map[views.View]*template.Template
 }
 
-func New(views fs.FS, dbDsnURI string) *Server {
+func New(viewsFS fs.FS, dbDsnURI string) *Server {
 	conn := db.New(dbDsnURI)
 
 	return &Server{
 		mux:       http.NewServeMux(),
 		conn:      conn,
-		views:     views,
+		views:     viewsFS,
 		q:         models.New(conn),
-		templates: make(map[string]*template.Template),
+		templates: make(map[views.View]*template.Template),
 	}
 }
 
 func (s *Server) LoadTemplates() {
-	templates := map[string][]string{
-		"board":           {"components/base.html", "board.html", "components/card.html"},
-		"board_cards_new": {"components/base.html", "board_cards_new.html"},
+	templates := map[views.View][]string{
+		views.BOARD:           {"components/base.html", "board.html", "components/card.html"},
+		views.BOARD_CARDS_NEW: {"components/base.html", "board_cards_new.html"},
+		views.SIGNUP:          {"components/base_auth.html", "signup.html"},
 	}
 
-	for name, tmpls := range templates {
-		s.templates[name] = render.Load(s.views, tmpls...)
+	for id, tmpls := range templates {
+		s.templates[id] = render.Load(s.views, tmpls...)
 	}
 }
 
@@ -48,11 +50,12 @@ func (s *Server) Routes() {
 	s.mux.HandleFunc("GET /board", s.viewBoard)
 	s.mux.HandleFunc("GET /board/cards/new", s.viewBoardCardsNew)
 	s.mux.HandleFunc("POST /board/cards/new", s.apiInsertCard)
+	s.mux.HandleFunc("GET /auth/simple/signup", s.viewSignUp)
+	s.mux.HandleFunc("POST /auth/simple/signup", s.apiInsertUser)
 
 	// TODO
 	// Auth
 	s.mux.HandleFunc("POST /auth/simple/login", func(w http.ResponseWriter, r *http.Request) {})
-	s.mux.HandleFunc("POST /auth/simple/signup", func(w http.ResponseWriter, r *http.Request) {})
 
 	// OAuth2
 	s.mux.HandleFunc("POST /auth/google/login", func(w http.ResponseWriter, r *http.Request) {})

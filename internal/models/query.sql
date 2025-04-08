@@ -76,5 +76,23 @@ insert into comments (
     END
 ) returning id;
 
+-- name: GetUserTypes :many
+select * from user_types;
+
 -- name: GetUser :one
 select * from users where id = @id limit 1;
+
+-- name: InsertUser :one
+insert into users (
+    name,
+    email,
+    username,
+    password,
+    user_type_id
+) values (
+    @name,
+    @email,
+    @username,
+    @password,
+    @user_type_id
+) returning id;

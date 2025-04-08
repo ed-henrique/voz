@@ -7,6 +7,8 @@ create table user_types (
     removed_at datetime
 );
 
+insert into user_types (name) values ('Common');
+
 -- Users
 create table users (
     id integer primary key,

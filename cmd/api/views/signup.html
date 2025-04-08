@@ -1,0 +1,49 @@
+{{ define "title" }} - Sign Up{{ end }}
+{{ define "content" }}
+<h2 class="text-lg text-center italic mb-3 w-full lg:w-3/4">Sign Up</h2>
+<div class="bg-blue-500 p-5 rounded-md shadow-md text-white w-full md:w-3/4 lg:w-1/3">
+  <form action="/auth/simple/signup" method="POST">
+    <div class="mb-3">
+      <label for="name" class="font-bold mb-1">Name</label>
+      <input autofocus required type="text" id="name" name="name"
+        class="bg-blue-400 focus:outline-2 focus:outline-white-500 rounded-md px-2 w-full">
+    </div>
+    <div class="mb-3">
+      <label for="username" class="font-bold mb-1">Username</label>
+      <input required type="text" id="username" name="username"
+        class="bg-blue-400 focus:outline-2 focus:outline-white-500 rounded-md px-2 w-full">
+    </div>
+    <div class="mb-3">
+      <label for="email" class="font-bold mb-1">Email</label>
+      <input required type="email" id="email" name="email"
+        class="bg-blue-400 focus:outline-2 focus:outline-white-500 rounded-md px-2 w-full">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="font-bold mb-1">Password</label>
+      <input required type="password" id="password" name="password"
+        class="bg-blue-400 focus:outline-2 focus:outline-white-500 rounded-md px-2 w-full">
+    </div>
+    <div class="mb-3">
+      <label for="confirm_password" class="font-bold mb-1">Confirm Password</label>
+      <input required type="password" id="confirm_password" name="confirm_password"
+        class="bg-blue-400 focus:outline-2 focus:outline-white-500 rounded-md px-2 w-full">
+    </div>
+    <div class="mb-3">
+      <label for="user_type_id" class="font-bold mb-1">User Type</label>
+      <select required id="user_type_id" name="user_type_id"
+        class="bg-blue-400 h-6 focus:outline-2 focus:outline-white-500 rounded-md px-2 w-full">
+        {{ range . }}
+        <option value="{{ .ID }}">{{ .Name }}</option>
+        {{ else }}
+        <option selected value="-1">No User Type Added</option>
+        {{ end }}
+      </select>
+    </div>
+    <button
+      class="bg-blue-400 cursor-pointer float-right font-semibold focus:outline-2 focus:outline-white-500 p-2 px-4 rounded-md"
+      type="submit">
+      Add
+    </button>
+  </form>
+</div>
+{{ end }}

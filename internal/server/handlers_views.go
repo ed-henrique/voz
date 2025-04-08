@@ -1,12 +1,11 @@
 package server
 
 import (
-	"fmt"
 	"log/slog"
 	"net/http"
 
 	"github.com/ed-henrique/voz/internal/logger"
-	"github.com/ed-henrique/voz/internal/models"
+	"github.com/ed-henrique/voz/internal/views"
 )
 
 func (s *Server) viewBoard(w http.ResponseWriter, r *http.Request) {
@@ -18,7 +17,7 @@ func (s *Server) viewBoard(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := s.templates["board"].Execute(w, cards); err != nil {
+	if err := s.templates[views.BOARD].Execute(w, cards); err != nil {
 		msg := "could not execute board template"
 		logger.Error(msg, slog.String("err", err.Error()))
 		http.Error(w, msg, http.StatusInternalServerError)
@@ -26,8 +25,8 @@ func (s *Server) viewBoard(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) viewBoardCardsNew(w http.ResponseWriter, r *http.Request) {
-	if err := s.templates["board_cards_new"].Execute(w, nil); err != nil {
+func (s *Server) viewBoardCardsNew(w http.ResponseWriter, _ *http.Request) {
+	if err := s.templates[views.BOARD_CARDS_NEW].Execute(w, nil); err != nil {
 		msg := "could not execute board_cards_new template"
 		logger.Error(msg, slog.String("err", err.Error()))
 		http.Error(w, msg, http.StatusInternalServerError)
@@ -35,27 +34,19 @@ func (s *Server) viewBoardCardsNew(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (s *Server) apiInsertCard(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		msg := "could not parse form"
-		logger.Error(msg, slog.String("err", err.Error()))
-		http.Error(w, msg, http.StatusInternalServerError)
-		return
-	}
-
-	name := r.PostFormValue("name")
-	description := r.PostFormValue("description")
-
-	id, err := s.q.InsertCard(r.Context(), models.InsertCardParams{
-		Name:        name,
-		Description: description,
-	})
+func (s *Server) viewSignUp(w http.ResponseWriter, r *http.Request) {
+	userTypes, err := s.q.GetUserTypes(r.Context())
 	if err != nil {
-		msg := "could not insert card"
+		msg := "could not fetch user types"
 		logger.Error(msg, slog.String("err", err.Error()))
 		http.Error(w, msg, http.StatusInternalServerError)
 		return
 	}
 
-	http.Redirect(w, r, fmt.Sprintf("/board/cards/%d", id), http.StatusSeeOther)
+	if err := s.templates[views.SIGNUP].Execute(w, userTypes); err != nil {
+		msg := "could not execute signup template"
+		logger.Error(msg, slog.String("err", err.Error()))
+		http.Error(w, msg, http.StatusInternalServerError)
+		return
+	}
 }

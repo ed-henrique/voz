@@ -392,6 +392,39 @@ func (q *Queries) GetUser(ctx context.Context, id int64) (User, error) {
 	return i, err
 }
 
+const getUserTypes = `-- name: GetUserTypes :many
+select id, name, created_at, updated_at, removed_at from user_types
+`
+
+func (q *Queries) GetUserTypes(ctx context.Context) ([]UserType, error) {
+	rows, err := q.db.QueryContext(ctx, getUserTypes)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []UserType
+	for rows.Next() {
+		var i UserType
+		if err := rows.Scan(
+			&i.ID,
+			&i.Name,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+			&i.RemovedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const insertCard = `-- name: InsertCard :one
 insert into cards (
     name,
@@ -447,6 +480,43 @@ func (q *Queries) InsertComment(ctx context.Context, arg InsertCommentParams) (i
 		arg.CardID,
 		arg.UserID,
 		arg.CommentID,
+	)
+	var id int64
+	err := row.Scan(&id)
+	return id, err
+}
+
+const insertUser = `-- name: InsertUser :one
+insert into users (
+    name,
+    email,
+    username,
+    password,
+    user_type_id
+) values (
+    ?1,
+    ?2,
+    ?3,
+    ?4,
+    ?5
+) returning id
+`
+
+type InsertUserParams struct {
+	Name       string
+	Email      string
+	Username   string
+	Password   string
+	UserTypeID int64
+}
+
+func (q *Queries) InsertUser(ctx context.Context, arg InsertUserParams) (int64, error) {
+	row := q.db.QueryRowContext(ctx, insertUser,
+		arg.Name,
+		arg.Email,
+		arg.Username,
+		arg.Password,
+		arg.UserTypeID,
 	)
 	var id int64
 	err := row.Scan(&id)
